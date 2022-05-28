@@ -5,63 +5,144 @@
  * https://matejkustec.github.io/SpinThatShit
  */
 export function useLoading() {
-  const className = `loaders-css__square-spin`
+  const className = `loaders-css__lds-roller`;
   const styleContent = `
-@keyframes square-spin {
-  25% { transform: perspective(100px) rotateX(180deg) rotateY(0); }
-  50% { transform: perspective(100px) rotateX(180deg) rotateY(180deg); }
-  75% { transform: perspective(100px) rotateX(0) rotateY(180deg); }
-  100% { transform: perspective(100px) rotateX(0) rotateY(0); }
-}
-.${className} > div {
-  animation-fill-mode: both;
-  width: 50px;
-  height: 50px;
-  background: #fff;
-  animation: square-spin 3s 0s cubic-bezier(0.09, 0.57, 0.49, 0.9) infinite;
-}
-.app-loading-wrap {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #282c34;
-  z-index: 9;
-}
-    `
-  const oStyle = document.createElement('style')
-  const oDiv = document.createElement('div')
+  .${className} {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+  .${className} div {
+    animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    transform-origin: 40px 40px;
+  }
+  .${className} div:after {
+    content: " ";
+    display: block;
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #fff;
+    margin: -4px 0 0 -4px;
+  }
+  .${className} div:nth-child(1) {
+    animation-delay: -0.036s;
+  }
+  .${className} div:nth-child(1):after {
+    top: 63px;
+    left: 63px;
+  }
+  .${className} div:nth-child(2) {
+    animation-delay: -0.072s;
+  }
+  .${className} div:nth-child(2):after {
+    top: 68px;
+    left: 56px;
+  }
+  .${className} div:nth-child(3) {
+    animation-delay: -0.108s;
+  }
+  .${className} div:nth-child(3):after {
+    top: 71px;
+    left: 48px;
+  }
+  .${className} div:nth-child(4) {
+    animation-delay: -0.144s;
+  }
+  .${className} div:nth-child(4):after {
+    top: 72px;
+    left: 40px;
+  }
+  .${className} div:nth-child(5) {
+    animation-delay: -0.18s;
+  }
+  .${className} div:nth-child(5):after {
+    top: 71px;
+    left: 32px;
+  }
+  .${className} div:nth-child(6) {
+    animation-delay: -0.216s;
+  }
+  .${className} div:nth-child(6):after {
+    top: 68px;
+    left: 24px;
+  }
+  .${className} div:nth-child(7) {
+    animation-delay: -0.252s;
+  }
+  .${className} div:nth-child(7):after {
+    top: 63px;
+    left: 17px;
+  }
+  .${className} div:nth-child(8) {
+    animation-delay: -0.288s;
+  }
+  .${className} div:nth-child(8):after {
+    top: 56px;
+    left: 12px;
+  }
+  .app-loading-wrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #282c34;
+    z-index: 9;
+  }
+  @keyframes lds-roller {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }  
+  `;
+  const oStyle = document.createElement("style");
+  const oDiv = document.createElement("div");
 
-  oStyle.id = 'app-loading-style'
-  oStyle.innerHTML = styleContent
-  oDiv.className = 'app-loading-wrap'
-  oDiv.innerHTML = `<div class="${className}"><div></div></div>`
+  oStyle.id = "app-loading-style";
+  oStyle.innerHTML = styleContent;
+  oDiv.className = "app-loading-wrap";
+  oDiv.innerHTML = `
+    <div class="${className}">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>`;
 
   return {
     appendLoading() {
-      safe.append(document.head, oStyle)
-      safe.append(document.body, oDiv)
+      safe.append(document.head, oStyle);
+      safe.append(document.body, oDiv);
     },
     removeLoading() {
-      safe.remove(document.head, oStyle)
-      safe.remove(document.body, oDiv)
+      safe.remove(document.head, oStyle);
+      safe.remove(document.body, oDiv);
     },
-  }
+  };
 }
 
 const safe = {
   append(parent: HTMLElement, child: HTMLElement) {
-    if (!Array.from(parent.children).find(e => e === child)) {
-      return parent.appendChild(child)
+    if (!Array.from(parent.children).find((e) => e === child)) {
+      return parent.appendChild(child);
     }
   },
   remove(parent: HTMLElement, child: HTMLElement) {
-    if (Array.from(parent.children).find(e => e === child)) {
-      return parent.removeChild(child)
+    if (Array.from(parent.children).find((e) => e === child)) {
+      return parent.removeChild(child);
     }
   },
-}
+};
